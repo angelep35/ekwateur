@@ -17,30 +17,23 @@ class EnergyPriceServiceTest {
     @Autowired
     private EnergyPriceService energyPriceService;
 
+    private IndividualClient individualClient = new IndividualClient(
+            "EKW000000000",
+            100,
+            250,
+            Gender.FEMALE,
+            "Angele",
+            "Petitjean"
+    );
+
     @Test
     void whenIndividualClient_shouldReturnCorrectGasPrice() {
-        IndividualClient individualClient = new IndividualClient(
-                "EKW000000000",
-                100,
-                250,
-                Gender.FEMALE,
-                "Angele",
-                "Petitjean"
-        );
         BigDecimal price = energyPriceService.getPrice(Energy.GAS, individualClient);
         assertEquals(BigDecimal.valueOf(0.108), price);
     }
 
     @Test
     void whenIndividualClient_shouldReturnCorrectElectricityPrice() {
-        IndividualClient individualClient = new IndividualClient(
-                "EKW000000000",
-                100,
-                250,
-                Gender.FEMALE,
-                "Angele",
-                "Petitjean"
-        );
         BigDecimal price = energyPriceService.getPrice(Energy.ELECTRICITY, individualClient);
         assertEquals(BigDecimal.valueOf(0.133), price);
     }
