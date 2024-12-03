@@ -9,6 +9,6 @@ import java.math.BigDecimal;
 @Service
 public class EnergyPriceService {
     public BigDecimal getPrice(Energy energy, IndividualClient individualClient) {
-        return BigDecimal.valueOf(0.108);
+        return energy.getIndividualClientPrice();
     }
 }

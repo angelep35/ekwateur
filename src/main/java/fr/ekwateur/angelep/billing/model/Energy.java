@@ -1,7 +1,10 @@
 package fr.ekwateur.angelep.billing.model;
 
+import lombok.Getter;
+
 import java.math.BigDecimal;
 
+@Getter
 public enum Energy {
     GAS(BigDecimal.valueOf(0.108), BigDecimal.valueOf(0.117), BigDecimal.valueOf(0.123)),
     ELECTRICITY(BigDecimal.valueOf(0.133), BigDecimal.valueOf(0.112), BigDecimal.valueOf(0.110));
