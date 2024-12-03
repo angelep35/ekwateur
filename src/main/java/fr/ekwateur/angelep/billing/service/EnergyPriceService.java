@@ -12,8 +12,15 @@ public class EnergyPriceService {
 
     public BigDecimal getPrice(Energy energy, Client client) {
         if (client instanceof CorporateClient) {
-            return energy.getCorporateClientUpperTurnoverPrice();
+            return getCorporateClientPrice(energy, (CorporateClient) client);
         }
         return energy.getIndividualClientPrice();
+    }
+
+    private BigDecimal getCorporateClientPrice(Energy energy, CorporateClient corporateClient) {
+        if (corporateClient.getTurnover().compareTo(BigDecimal.valueOf(1000000)) > 0) {
+            return energy.getCorporateClientUpperTurnoverPrice();
+        }
+        return energy.getCorporateClientLowerTurnoverPrice();
     }
 }

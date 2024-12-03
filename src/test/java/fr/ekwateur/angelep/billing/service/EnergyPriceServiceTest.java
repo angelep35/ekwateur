@@ -36,6 +36,15 @@ class EnergyPriceServiceTest {
             BigDecimal.valueOf(2000000)
     );
 
+    private CorporateClient corporateClientLowerTurnover = new CorporateClient(
+            "EKW000000000",
+            3000,
+            6500,
+            "SIRET",
+            "myCompany",
+            BigDecimal.valueOf(2300)
+    );
+
     @Test
     void whenIndividualClient_shouldReturnCorrectGasPrice() {
         BigDecimal price = energyPriceService.getPrice(Energy.GAS, individualClient);
@@ -58,6 +67,12 @@ class EnergyPriceServiceTest {
     void whenCorporateClientWithTurnoverBiggerThan1000000_shouldReturnCorrectElectricityPrice() {
         BigDecimal price = energyPriceService.getPrice(Energy.ELECTRICITY, corporateClientUpperTurnover);
         assertEquals(BigDecimal.valueOf(0.110), price);
+    }
+
+    @Test
+    void whenCorporateClientWithTurnoverLowerThan1000000_shouldReturnCorrectGasPrice() {
+        BigDecimal price = energyPriceService.getPrice(Energy.GAS, corporateClientLowerTurnover);
+        assertEquals(BigDecimal.valueOf(0.117), price);
     }
 
 }
