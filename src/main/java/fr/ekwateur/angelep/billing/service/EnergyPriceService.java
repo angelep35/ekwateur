@@ -10,6 +10,8 @@ import java.math.BigDecimal;
 @Service
 public class EnergyPriceService {
 
+    public static final int THRESHOLD = 1000000;
+
     public BigDecimal getPrice(Energy energy, Client client) {
         if (client instanceof CorporateClient) {
             return getCorporateClientPrice(energy, (CorporateClient) client);
@@ -18,9 +20,13 @@ public class EnergyPriceService {
     }
 
     private BigDecimal getCorporateClientPrice(Energy energy, CorporateClient corporateClient) {
-        if (corporateClient.getTurnover().compareTo(BigDecimal.valueOf(1000000)) > 0) {
+        if (turnoverGreaterThanThreshold(corporateClient)) {
             return energy.getCorporateClientUpperTurnoverPrice();
         }
         return energy.getCorporateClientLowerTurnoverPrice();
+    }
+
+    private static boolean turnoverGreaterThanThreshold(CorporateClient corporateClient) {
+        return corporateClient.getTurnover().compareTo(BigDecimal.valueOf(THRESHOLD)) > 0;
     }
 }
