@@ -1,5 +1,6 @@
 package fr.ekwateur.angelep.billing.service;
 
+import fr.ekwateur.angelep.billing.model.CorporateClient;
 import fr.ekwateur.angelep.billing.model.Energy;
 import fr.ekwateur.angelep.billing.model.Gender;
 import fr.ekwateur.angelep.billing.model.IndividualClient;
@@ -26,6 +27,15 @@ class EnergyPriceServiceTest {
             "Petitjean"
     );
 
+    private CorporateClient corporateClientUpperTurnover = new CorporateClient(
+            "EKW000000000",
+            3000,
+            6500,
+            "SIRET",
+            "myCompany",
+            BigDecimal.valueOf(2000000)
+    );
+
     @Test
     void whenIndividualClient_shouldReturnCorrectGasPrice() {
         BigDecimal price = energyPriceService.getPrice(Energy.GAS, individualClient);
@@ -36,6 +46,12 @@ class EnergyPriceServiceTest {
     void whenIndividualClient_shouldReturnCorrectElectricityPrice() {
         BigDecimal price = energyPriceService.getPrice(Energy.ELECTRICITY, individualClient);
         assertEquals(BigDecimal.valueOf(0.133), price);
+    }
+
+    @Test
+    void whenCorporateClientWithTurnoverBiggerThan1000000_shouldReturnCorrectGasPrice() {
+        BigDecimal price = energyPriceService.getPrice(Energy.GAS, corporateClientUpperTurnover);
+        assertEquals(BigDecimal.valueOf(0.123), price);
     }
 
 }
