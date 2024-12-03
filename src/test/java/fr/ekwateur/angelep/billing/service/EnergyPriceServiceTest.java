@@ -75,4 +75,10 @@ class EnergyPriceServiceTest {
         assertEquals(BigDecimal.valueOf(0.117), price);
     }
 
+    @Test
+    void whenCorporateClientWithTurnoverLowerThan1000000_shouldReturnCorrectElectricityPrice() {
+        BigDecimal price = energyPriceService.getPrice(Energy.ELECTRICITY, corporateClientLowerTurnover);
+        assertEquals(BigDecimal.valueOf(0.112), price);
+    }
+
 }
