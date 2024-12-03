@@ -1,4 +1,4 @@
-package fr.ekwateur.angelep.billing.service;
+package fr.ekwateur.angelep.billing.helper;
 
 import fr.ekwateur.angelep.billing.model.CorporateClient;
 import fr.ekwateur.angelep.billing.model.Energy;
@@ -13,10 +13,10 @@ import java.math.BigDecimal;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
-class EnergyPriceServiceTest {
+class EnergyPriceHelperTest {
 
     @Autowired
-    private EnergyPriceService energyPriceService;
+    private EnergyPriceHelper energyPriceHelper;
 
     private IndividualClient individualClient = new IndividualClient(
             "EKW000000000",
@@ -56,49 +56,49 @@ class EnergyPriceServiceTest {
 
     @Test
     void whenIndividualClient_shouldReturnCorrectGasPrice() {
-        BigDecimal price = energyPriceService.getPrice(Energy.GAS, individualClient);
+        BigDecimal price = energyPriceHelper.getPrice(Energy.GAS, individualClient);
         assertEquals(BigDecimal.valueOf(0.108), price);
     }
 
     @Test
     void whenIndividualClient_shouldReturnCorrectElectricityPrice() {
-        BigDecimal price = energyPriceService.getPrice(Energy.ELECTRICITY, individualClient);
+        BigDecimal price = energyPriceHelper.getPrice(Energy.ELECTRICITY, individualClient);
         assertEquals(BigDecimal.valueOf(0.133), price);
     }
 
     @Test
     void whenCorporateClientWithTurnoverBiggerThan1000000_shouldReturnCorrectGasPrice() {
-        BigDecimal price = energyPriceService.getPrice(Energy.GAS, corporateClientUpperTurnover);
+        BigDecimal price = energyPriceHelper.getPrice(Energy.GAS, corporateClientUpperTurnover);
         assertEquals(BigDecimal.valueOf(0.123), price);
     }
 
     @Test
     void whenCorporateClientWithTurnoverBiggerThan1000000_shouldReturnCorrectElectricityPrice() {
-        BigDecimal price = energyPriceService.getPrice(Energy.ELECTRICITY, corporateClientUpperTurnover);
+        BigDecimal price = energyPriceHelper.getPrice(Energy.ELECTRICITY, corporateClientUpperTurnover);
         assertEquals(BigDecimal.valueOf(0.110), price);
     }
 
     @Test
     void whenCorporateClientWithTurnoverLowerThan1000000_shouldReturnCorrectGasPrice() {
-        BigDecimal price = energyPriceService.getPrice(Energy.GAS, corporateClientLowerTurnover);
+        BigDecimal price = energyPriceHelper.getPrice(Energy.GAS, corporateClientLowerTurnover);
         assertEquals(BigDecimal.valueOf(0.117), price);
     }
 
     @Test
     void whenCorporateClientWithTurnoverLowerThan1000000_shouldReturnCorrectElectricityPrice() {
-        BigDecimal price = energyPriceService.getPrice(Energy.ELECTRICITY, corporateClientLowerTurnover);
+        BigDecimal price = energyPriceHelper.getPrice(Energy.ELECTRICITY, corporateClientLowerTurnover);
         assertEquals(BigDecimal.valueOf(0.112), price);
     }
 
     @Test
     void whenCorporateClientWithTurnoverEqualTo1000000_shouldReturnSameGasPriceAsLower() {
-        BigDecimal price = energyPriceService.getPrice(Energy.GAS, corporateClient1000000Turnover);
+        BigDecimal price = energyPriceHelper.getPrice(Energy.GAS, corporateClient1000000Turnover);
         assertEquals(BigDecimal.valueOf(0.117), price);
     }
 
     @Test
     void whenCorporateClientWithTurnoverEqualTo1000000_shouldReturnSameElectricityPriceAsLower() {
-        BigDecimal price = energyPriceService.getPrice(Energy.ELECTRICITY, corporateClient1000000Turnover);
+        BigDecimal price = energyPriceHelper.getPrice(Energy.ELECTRICITY, corporateClient1000000Turnover);
         assertEquals(BigDecimal.valueOf(0.112), price);
     }
 

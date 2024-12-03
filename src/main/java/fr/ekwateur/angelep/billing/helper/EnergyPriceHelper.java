@@ -1,4 +1,4 @@
-package fr.ekwateur.angelep.billing.service;
+package fr.ekwateur.angelep.billing.helper;
 
 import fr.ekwateur.angelep.billing.model.Client;
 import fr.ekwateur.angelep.billing.model.CorporateClient;
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 
 @Service
-public class EnergyPriceService {
+public class EnergyPriceHelper {
 
     public static final int THRESHOLD = 1000000;
 
