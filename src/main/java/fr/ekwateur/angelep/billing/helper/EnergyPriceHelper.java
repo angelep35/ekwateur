@@ -12,14 +12,14 @@ public class EnergyPriceHelper {
 
     public static final int THRESHOLD = 1000000;
 
-    public BigDecimal getPrice(Energy energy, Client client) {
+    public static BigDecimal getPrice(Energy energy, Client client) {
         if (client instanceof CorporateClient) {
             return getCorporateClientPrice(energy, (CorporateClient) client);
         }
         return energy.getIndividualClientPrice();
     }
 
-    private BigDecimal getCorporateClientPrice(Energy energy, CorporateClient corporateClient) {
+    private static BigDecimal getCorporateClientPrice(Energy energy, CorporateClient corporateClient) {
         if (turnoverGreaterThanThreshold(corporateClient)) {
             return energy.getCorporateClientUpperTurnoverPrice();
         }
