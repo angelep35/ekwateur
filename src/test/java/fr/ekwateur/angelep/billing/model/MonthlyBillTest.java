@@ -13,17 +13,19 @@ import static org.mockito.Mockito.mockStatic;
 
 class MonthlyBillTest {
 
-    private final IndividualClient individualClient = new IndividualClient(
-            "EKW000000000",
-            100,
-            250,
-            Gender.FEMALE,
-            "Angele",
-            "Petitjean"
-    );
+    private IndividualClient individualClient;
 
     @Test
-    void whenElectricityAndGasConsumptionNotNull_ShouldCorrectlyCalculateAmountsDue() {
+    void whenElectricityAndGasConsumptionNot0_ShouldCorrectlyCalculateAmountsDue() {
+        individualClient = new IndividualClient(
+                "EKW000000000",
+                100,
+                250,
+                Gender.FEMALE,
+                "Angele",
+                "Petitjean"
+        );
+
         try (MockedStatic<EnergyPriceHelper> mockedStatic = mockStatic(EnergyPriceHelper.class)) {
             mockedStatic.when(() -> EnergyPriceHelper.getPrice(ELECTRICITY, individualClient)).thenReturn(BigDecimal.valueOf(0.133));
             mockedStatic.when(() -> EnergyPriceHelper.getPrice(GAS, individualClient)).thenReturn(BigDecimal.valueOf(0.108));
@@ -35,7 +37,30 @@ class MonthlyBillTest {
             assertEquals(0, BigDecimal.valueOf(40.3).compareTo(bill.getTotalAmountDue()));
 
         }
+    }
 
+    @Test
+    void whenElectricityConsumptionIs0_ShouldCorrectlyCalculateAmountsDue() {
+        individualClient = new IndividualClient(
+                "EKW000000000",
+                0,
+                250,
+                Gender.FEMALE,
+                "Angele",
+                "Petitjean"
+        );
+
+        try (MockedStatic<EnergyPriceHelper> mockedStatic = mockStatic(EnergyPriceHelper.class)) {
+            mockedStatic.when(() -> EnergyPriceHelper.getPrice(ELECTRICITY, individualClient)).thenReturn(BigDecimal.valueOf(0.133));
+            mockedStatic.when(() -> EnergyPriceHelper.getPrice(GAS, individualClient)).thenReturn(BigDecimal.valueOf(0.108));
+
+            MonthlyBill bill = new MonthlyBill(individualClient);
+
+            assertEquals(0, BigDecimal.valueOf(0).compareTo(bill.getElectricityAmountDue()));
+            assertEquals(0, BigDecimal.valueOf(27).compareTo(bill.getGasAmountDue()));
+            assertEquals(0, BigDecimal.valueOf(27).compareTo(bill.getTotalAmountDue()));
+
+        }
     }
 
 }
