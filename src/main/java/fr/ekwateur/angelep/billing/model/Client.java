@@ -5,16 +5,16 @@ import lombok.Getter;
 @Getter
 public abstract class Client {
     private final String clientNumber;
-    private int electricityConsumption;
-    private int gasConsumption;
+    private int monthlyElectricityConsumption;
+    private int monthlyGasConsumption;
 
-    public Client(String clientNumber, int electricityConsumption, int gasConsumption) {
+    public Client(String clientNumber, int monthlyElectricityConsumption, int monthlyGasConsumption) {
         if (!isClientNumberValid(clientNumber)) {
             throw new IllegalArgumentException("Invalid clientNumber format");
         }
         this.clientNumber = clientNumber;
-        this.electricityConsumption = electricityConsumption;
-        this.gasConsumption = gasConsumption;
+        this.monthlyElectricityConsumption = monthlyElectricityConsumption;
+        this.monthlyGasConsumption = monthlyGasConsumption;
     }
 
     private boolean isClientNumberValid(String clientNumber) {
