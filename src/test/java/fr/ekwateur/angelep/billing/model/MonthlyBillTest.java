@@ -1,6 +1,6 @@
 package fr.ekwateur.angelep.billing.model;
 
-import fr.ekwateur.angelep.billing.helper.EnergyPriceHelper;
+import fr.ekwateur.angelep.billing.utils.EnergyPriceUtils;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockedStatic;
 
@@ -26,9 +26,9 @@ class MonthlyBillTest {
                 "Petitjean"
         );
 
-        try (MockedStatic<EnergyPriceHelper> mockedStatic = mockStatic(EnergyPriceHelper.class)) {
-            mockedStatic.when(() -> EnergyPriceHelper.getPrice(ELECTRICITY, individualClient)).thenReturn(BigDecimal.valueOf(0.133));
-            mockedStatic.when(() -> EnergyPriceHelper.getPrice(GAS, individualClient)).thenReturn(BigDecimal.valueOf(0.108));
+        try (MockedStatic<EnergyPriceUtils> mockedStatic = mockStatic(EnergyPriceUtils.class)) {
+            mockedStatic.when(() -> EnergyPriceUtils.getPrice(ELECTRICITY, individualClient)).thenReturn(BigDecimal.valueOf(0.133));
+            mockedStatic.when(() -> EnergyPriceUtils.getPrice(GAS, individualClient)).thenReturn(BigDecimal.valueOf(0.108));
 
             MonthlyBill bill = new MonthlyBill(individualClient);
 
@@ -50,9 +50,9 @@ class MonthlyBillTest {
                 "Petitjean"
         );
 
-        try (MockedStatic<EnergyPriceHelper> mockedStatic = mockStatic(EnergyPriceHelper.class)) {
-            mockedStatic.when(() -> EnergyPriceHelper.getPrice(ELECTRICITY, individualClient)).thenReturn(BigDecimal.valueOf(0.133));
-            mockedStatic.when(() -> EnergyPriceHelper.getPrice(GAS, individualClient)).thenReturn(BigDecimal.valueOf(0.108));
+        try (MockedStatic<EnergyPriceUtils> mockedStatic = mockStatic(EnergyPriceUtils.class)) {
+            mockedStatic.when(() -> EnergyPriceUtils.getPrice(ELECTRICITY, individualClient)).thenReturn(BigDecimal.valueOf(0.133));
+            mockedStatic.when(() -> EnergyPriceUtils.getPrice(GAS, individualClient)).thenReturn(BigDecimal.valueOf(0.108));
 
             MonthlyBill bill = new MonthlyBill(individualClient);
 
