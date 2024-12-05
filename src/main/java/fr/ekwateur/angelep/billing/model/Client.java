@@ -8,7 +8,7 @@ public abstract class Client {
     private int monthlyElectricityConsumption;
     private int monthlyGasConsumption;
 
-    public Client(String clientNumber, int monthlyElectricityConsumption, int monthlyGasConsumption) {
+    protected Client(String clientNumber, int monthlyElectricityConsumption, int monthlyGasConsumption) {
         if (!isClientNumberValid(clientNumber)) {
             throw new IllegalArgumentException("Invalid clientNumber format");
         }
