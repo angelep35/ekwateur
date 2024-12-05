@@ -5,8 +5,8 @@ import lombok.Getter;
 @Getter
 public abstract class Client {
     private final String clientNumber;
-    private int monthlyElectricityConsumption;
-    private int monthlyGasConsumption;
+    private final int monthlyElectricityConsumption;
+    private final int monthlyGasConsumption;
 
     protected Client(String clientNumber, int monthlyElectricityConsumption, int monthlyGasConsumption) {
         if (!isClientNumberValid(clientNumber)) {

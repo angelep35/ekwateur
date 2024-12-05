@@ -5,9 +5,9 @@ import lombok.Getter;
 @Getter
 public class IndividualClient extends Client {
 
-    private Gender gender;
-    private String firstName;
-    private String lastName;
+    private final Gender gender;
+    private final String firstName;
+    private final String lastName;
 
     public IndividualClient(String clientNumber, int electricityConsumption, int gasConsumption, Gender gender, String firstName, String lastName) {
         super(clientNumber, electricityConsumption, gasConsumption);
