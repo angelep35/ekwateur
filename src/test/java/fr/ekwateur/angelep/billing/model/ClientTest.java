@@ -25,7 +25,7 @@ public class ClientTest {
     @Test
     void whenClientNumberIsInvalid_ShouldThrowIllegalArgumentException() {
         String invalidClientNumber = "INVALID";
-
+        BigDecimal turnover = BigDecimal.valueOf(649741.56);
         IllegalArgumentException exception = assertThrows(
                 IllegalArgumentException.class,
                 () -> new CorporateClient(
@@ -34,7 +34,7 @@ public class ClientTest {
                         450,
                         "SIRET",
                         "myCompany",
-                        BigDecimal.valueOf(649741.56)
+                        turnover
                 ));
 
         assertEquals("Invalid clientNumber format", exception.getMessage());
