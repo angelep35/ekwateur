@@ -2,51 +2,25 @@ package fr.ekwateur.angelep.billing.utils;
 
 import fr.ekwateur.angelep.billing.model.CorporateClient;
 import fr.ekwateur.angelep.billing.model.Energy;
-import fr.ekwateur.angelep.billing.model.Gender;
 import fr.ekwateur.angelep.billing.model.IndividualClient;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.when;
 
+@ExtendWith(MockitoExtension.class)
 class EnergyPriceUtilsTest {
 
-    private IndividualClient individualClient = new IndividualClient(
-            "EKW000000000",
-            100,
-            250,
-            Gender.FEMALE,
-            "Angele",
-            "Petitjean"
-    );
+    @Mock
+    private IndividualClient individualClient;
 
-    private CorporateClient corporateClientUpperTurnover = new CorporateClient(
-            "EKW000000000",
-            3000,
-            6500,
-            "SIRET",
-            "myCompany",
-            BigDecimal.valueOf(2000000)
-    );
-
-    private CorporateClient corporateClientLowerTurnover = new CorporateClient(
-            "EKW000000000",
-            3000,
-            6500,
-            "SIRET",
-            "myCompany",
-            BigDecimal.valueOf(2300)
-    );
-
-    private CorporateClient corporateClient1000000Turnover = new CorporateClient(
-            "EKW000000000",
-            3000,
-            6500,
-            "SIRET",
-            "myCompany",
-            BigDecimal.valueOf(1000000)
-    );
+    @Mock
+    private CorporateClient corporateClient;
 
     @Test
     void whenIndividualClient_shouldReturnCorrectGasPrice() {
@@ -62,37 +36,43 @@ class EnergyPriceUtilsTest {
 
     @Test
     void whenCorporateClientWithTurnoverBiggerThan1000000_shouldReturnCorrectGasPrice() {
-        BigDecimal price = EnergyPriceUtils.getPrice(Energy.GAS, corporateClientUpperTurnover);
+        when(corporateClient.getTurnover()).thenReturn(BigDecimal.valueOf(2000000));
+        BigDecimal price = EnergyPriceUtils.getPrice(Energy.GAS, corporateClient);
         assertEquals(BigDecimal.valueOf(0.123), price);
     }
 
     @Test
     void whenCorporateClientWithTurnoverBiggerThan1000000_shouldReturnCorrectElectricityPrice() {
-        BigDecimal price = EnergyPriceUtils.getPrice(Energy.ELECTRICITY, corporateClientUpperTurnover);
+        when(corporateClient.getTurnover()).thenReturn(BigDecimal.valueOf(2000000));
+        BigDecimal price = EnergyPriceUtils.getPrice(Energy.ELECTRICITY, corporateClient);
         assertEquals(BigDecimal.valueOf(0.110), price);
     }
 
     @Test
     void whenCorporateClientWithTurnoverLowerThan1000000_shouldReturnCorrectGasPrice() {
-        BigDecimal price = EnergyPriceUtils.getPrice(Energy.GAS, corporateClientLowerTurnover);
+        when(corporateClient.getTurnover()).thenReturn(BigDecimal.valueOf(6000));
+        BigDecimal price = EnergyPriceUtils.getPrice(Energy.GAS, corporateClient);
         assertEquals(BigDecimal.valueOf(0.117), price);
     }
 
     @Test
     void whenCorporateClientWithTurnoverLowerThan1000000_shouldReturnCorrectElectricityPrice() {
-        BigDecimal price = EnergyPriceUtils.getPrice(Energy.ELECTRICITY, corporateClientLowerTurnover);
+        when(corporateClient.getTurnover()).thenReturn(BigDecimal.valueOf(6000));
+        BigDecimal price = EnergyPriceUtils.getPrice(Energy.ELECTRICITY, corporateClient);
         assertEquals(BigDecimal.valueOf(0.112), price);
     }
 
     @Test
     void whenCorporateClientWithTurnoverEqualTo1000000_shouldReturnSameGasPriceAsLower() {
-        BigDecimal price = EnergyPriceUtils.getPrice(Energy.GAS, corporateClient1000000Turnover);
+        when(corporateClient.getTurnover()).thenReturn(BigDecimal.valueOf(1000000));
+        BigDecimal price = EnergyPriceUtils.getPrice(Energy.GAS, corporateClient);
         assertEquals(BigDecimal.valueOf(0.117), price);
     }
 
     @Test
     void whenCorporateClientWithTurnoverEqualTo1000000_shouldReturnSameElectricityPriceAsLower() {
-        BigDecimal price = EnergyPriceUtils.getPrice(Energy.ELECTRICITY, corporateClient1000000Turnover);
+        when(corporateClient.getTurnover()).thenReturn(BigDecimal.valueOf(1000000));
+        BigDecimal price = EnergyPriceUtils.getPrice(Energy.ELECTRICITY, corporateClient);
         assertEquals(BigDecimal.valueOf(0.112), price);
     }
 
