@@ -2,6 +2,7 @@ package fr.ekwateur.angelep.billing.model;
 
 import fr.ekwateur.angelep.billing.utils.EnergyPriceUtils;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -9,6 +10,7 @@ import java.math.RoundingMode;
 import static fr.ekwateur.angelep.billing.model.Energy.ELECTRICITY;
 import static fr.ekwateur.angelep.billing.model.Energy.GAS;
 
+@Slf4j
 @Getter
 public class MonthlyBill {
     private final Client client;
@@ -31,9 +33,9 @@ public class MonthlyBill {
         return BigDecimal.valueOf(consumption).multiply(energyPrice);
     }
 
-    public String printBill() {
-        return String.format(
-                "Monthly Bill for Client: %s\n" +
+    public void printBill() {
+        String bill = String.format(
+                "\nMonthly Bill for Client: %s\n" +
                         "---------------------------------------------\n" +
                         "Gas Consumption:               %d kWh\n" +
                         "Gas Price:                     %.3f €/kWh\n" +
@@ -53,5 +55,6 @@ public class MonthlyBill {
                 electricityAmountDue.setScale(2, RoundingMode.HALF_DOWN),
                 totalAmountDue.setScale(2, RoundingMode.HALF_DOWN)
         );
+        log.info(bill);
     }
 }

@@ -13,52 +13,52 @@ import java.math.BigDecimal;
 @SpringBootApplication
 public class BillingApplication implements CommandLineRunner {
 
-	public static void main(String[] args) {
-		SpringApplication.run(BillingApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(BillingApplication.class, args);
+    }
 
-	private IndividualClient individualClient = new IndividualClient(
-			"EKW000000001",
-			100,
-			250,
-			Gender.FEMALE,
-			"Angele",
-			"Petitjean"
-	);
+    private IndividualClient individualClient = new IndividualClient(
+            "EKW000000001",
+            100,
+            250,
+            Gender.FEMALE,
+            "Angele",
+            "Petitjean"
+    );
 
-	private CorporateClient corporateClientUpperTurnover = new CorporateClient(
-			"EKW000000020",
-			3000,
-			6500,
-			"SIRET",
-			"myCompany",
-			BigDecimal.valueOf(2000000)
-	);
+    private CorporateClient corporateClientUpperTurnover = new CorporateClient(
+            "EKW000000020",
+            3000,
+            6500,
+            "SIRET",
+            "myCompany",
+            BigDecimal.valueOf(2000000)
+    );
 
-	private CorporateClient corporateClientLowerTurnover = new CorporateClient(
-			"EKW000000021",
-			3000,
-			6500,
-			"SIRET",
-			"myCompany",
-			BigDecimal.valueOf(2300)
-	);
+    private CorporateClient corporateClientLowerTurnover = new CorporateClient(
+            "EKW000000021",
+            3000,
+            6500,
+            "SIRET",
+            "myCompany",
+            BigDecimal.valueOf(2300)
+    );
 
-	private CorporateClient corporateClient1000000Turnover = new CorporateClient(
-			"EKW000000022",
-			3000,
-			6500,
-			"SIRET",
-			"myCompany",
-			BigDecimal.valueOf(1000000)
-	);
+    private CorporateClient corporateClient1000000Turnover = new CorporateClient(
+            "EKW000000022",
+            3000,
+            6500,
+            "SIRET",
+            "myCompany",
+            BigDecimal.valueOf(1000000)
+    );
 
 
-	@Override
-	public void run(String... args) throws Exception {
-		System.out.println(new MonthlyBill(individualClient).printBill());
-		System.out.println(new MonthlyBill(corporateClient1000000Turnover).printBill());
-		System.out.println(new MonthlyBill(corporateClientLowerTurnover).printBill());
-		System.out.println(new MonthlyBill(corporateClientUpperTurnover).printBill());
-	}
+    @Override
+    public void run(String... args) throws Exception {
+        new MonthlyBill(individualClient).printBill();
+        new MonthlyBill(corporateClient1000000Turnover).printBill();
+        new MonthlyBill(corporateClientLowerTurnover).printBill();
+        new MonthlyBill(corporateClientUpperTurnover).printBill();
+    }
 }
